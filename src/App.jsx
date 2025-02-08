@@ -1,5 +1,6 @@
+import React from 'react';  // <-- Agregar esta línea
 import { Routes, Route } from 'react-router-dom';
-import Navbar from "./componentes/Navbar";
+import Navbar from "./components/Navbar";
 import Home from './pages/Home';
 import Categoria from './pages/Categoria';
 import Carrito from './pages/Carrito';
