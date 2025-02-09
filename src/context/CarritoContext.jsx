@@ -5,17 +5,21 @@ export const CarritoContext = createContext();
 export const CarritoProvider = ({ children }) => {
   const [carrito, setCarrito] = useState([]);
 
-  // Agregar producto al carrito
   const agregarAlCarrito = (producto) => {
     setCarrito([...carrito, producto]);
   };
 
-  // Eliminar un producto específico por ID
   const eliminarDelCarrito = (id) => {
-    setCarrito(carrito.filter(item => item.id !== id));
+    // Elimina SOLO el primer producto que coincida con el ID
+    setCarrito((prevCarrito) => {
+      const index = prevCarrito.findIndex((item) => item.id === id);
+      if (index !== -1) {
+        return [...prevCarrito.slice(0, index), ...prevCarrito.slice(index + 1)];
+      }
+      return prevCarrito;
+    });
   };
 
-  // Vaciar todo el carrito
   const vaciarCarrito = () => {
     setCarrito([]);
   };
