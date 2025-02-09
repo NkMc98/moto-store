@@ -1,29 +1,29 @@
-import React, { createContext, useReducer } from 'react';
+import { createContext, useState } from 'react';
 
 export const CarritoContext = createContext();
 
-const carritoReducer = (state, action) => {
-  switch (action.type) {
-    case 'AGREGAR_PRODUCTO':
-      return [...state, action.payload];
-      
-    case 'REMOVER_PRODUCTO':
-      return state.filter((item) => item.id !== action.payload);
-    default:
-      return state;
-  }
-};
-
 export const CarritoProvider = ({ children }) => {
-  const [carrito, dispatch] = useReducer(carritoReducer, []);
+  const [carrito, setCarrito] = useState([]);
 
+  // Agregar producto al carrito
   const agregarAlCarrito = (producto) => {
-    dispatch({ type: 'AGREGAR_PRODUCTO', payload: producto });
+    setCarrito([...carrito, producto]);
+  };
+
+  // Eliminar un producto específico por ID
+  const eliminarDelCarrito = (id) => {
+    setCarrito(carrito.filter(item => item.id !== id));
+  };
+
+  // Vaciar todo el carrito
+  const vaciarCarrito = () => {
+    setCarrito([]);
   };
 
   return (
-    <CarritoContext.Provider value={{ carrito, agregarAlCarrito }}>
+    <CarritoContext.Provider value={{ carrito, agregarAlCarrito, eliminarDelCarrito, vaciarCarrito }}>
       {children}
     </CarritoContext.Provider>
   );
 };
+

@@ -1,20 +1,16 @@
-import React, { useContext, memo } from 'react';
+import { useContext } from 'react';
 import { CarritoContext } from '../context/CarritoContext';
 
-const ProductoCard = memo(({ producto }) => {
-  const carritoContext = useContext(CarritoContext);
-  if (!carritoContext) return null; // Evita errores si el contexto no está definido
-
-  const { agregarAlCarrito } = carritoContext;
+const ProductoCard = ({ producto }) => {
+  const { agregarAlCarrito, eliminarDelCarrito } = useContext(CarritoContext);
 
   return (
     <div className="border p-4 rounded-lg bg-gray-800 shadow-lg hover:scale-105 transition-transform">
-      
       <img
         src={producto.imagen}
         alt={producto.nombre}
         className="w-full h-40 object-cover rounded-md"
-        loading="lazy" 
+        loading="lazy"
       />
       <h3 className="text-lg font-bold text-white">{producto.nombre}</h3>
       <p className="text-gray-300">Marca: {producto.marca}</p>
@@ -25,8 +21,16 @@ const ProductoCard = memo(({ producto }) => {
       >
         🛒 Agregar al carrito
       </button>
+      {/* Botón para eliminar un producto */}
+      <button
+        onClick={() => eliminarDelCarrito(producto.id)}
+        className="mt-3 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg transition ml-2"
+      >
+        🗑️
+      </button>
     </div>
   );
-});
+};
 
 export default ProductoCard;
+
