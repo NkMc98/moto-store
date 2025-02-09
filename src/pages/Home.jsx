@@ -1,4 +1,4 @@
-import React from 'react';  // <-- Agregar esta línea
+import React from 'react';  
 
 const Home = () => {
   return (
