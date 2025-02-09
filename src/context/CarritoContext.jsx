@@ -6,6 +6,7 @@ const carritoReducer = (state, action) => {
   switch (action.type) {
     case 'AGREGAR_PRODUCTO':
       return [...state, action.payload];
+      
     case 'REMOVER_PRODUCTO':
       return state.filter((item) => item.id !== action.payload);
     default:
