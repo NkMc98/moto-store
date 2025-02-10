@@ -1,20 +1,28 @@
-import { createContext, useState } from 'react';
+import React, { createContext, useState, useEffect } from 'react';
 
 export const CarritoContext = createContext();
 
 export const CarritoProvider = ({ children }) => {
-  const [carrito, setCarrito] = useState([]);
+  const [carrito, setCarrito] = useState(() => {
+    const carritoGuardado = localStorage.getItem('carrito');
+    return carritoGuardado ? JSON.parse(carritoGuardado) : [];
+  });
+
+  useEffect(() => {
+    localStorage.setItem('carrito', JSON.stringify(carrito));
+  }, [carrito]);
 
   const agregarAlCarrito = (producto) => {
-    setCarrito([...carrito, producto]);
+    setCarrito((prevCarrito) => [...prevCarrito, producto]);
   };
 
   const eliminarDelCarrito = (id) => {
-    // Elimina SOLO el primer producto que coincida con el ID
     setCarrito((prevCarrito) => {
       const index = prevCarrito.findIndex((item) => item.id === id);
       if (index !== -1) {
-        return [...prevCarrito.slice(0, index), ...prevCarrito.slice(index + 1)];
+        const nuevoCarrito = [...prevCarrito];
+        nuevoCarrito.splice(index, 1);
+        return nuevoCarrito;
       }
       return prevCarrito;
     });
@@ -30,4 +38,3 @@ export const CarritoProvider = ({ children }) => {
     </CarritoContext.Provider>
   );
 };
-
