@@ -1,9 +1,10 @@
-import Product from '../models/Product.js';
+import Categoria from '../models/Product.js';
 
-export const getProducts = async (req, res) => {
+export const getCategorias = async (req, res) => {
   try {
-    const products = await Product.find({});
-    res.json(products);
+    const categorias = await Categoria.find({});
+		console.log("TCL: getCategoria -> categoria", categorias)
+    res.json(categorias);
   } catch (error) {
     res.status(500).json({ message: "Error al obtener productos" });
   }
