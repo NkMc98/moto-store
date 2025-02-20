@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import React,{ useEffect, useState } from "react";
 import ProductoCard from "../components/ProductoCard";
 
 const Categoria = () => {
@@ -9,8 +9,9 @@ const Categoria = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await fetch("/api/products"); // Se usa el proxy de Vite
+        const response = await fetch("http://localhost:5000/api/products"); // Se usa el proxy de Vite
         const data = await response.json();
+				console.log("TCL: fetchProducts -> data", data)
         setProductos(data);
       } catch (error) {
         console.error("Error al obtener productos:", error);
